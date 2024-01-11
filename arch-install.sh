@@ -21,7 +21,7 @@ arch-chroot /mnt
 
 # Install bootloader (source: https://arch.d3sox.me/installation/install-bootloader)
 pacman -S grub os-prober efibootmgr dosfstools mtools gptfdisk fatresize
-grub-install --target=x86_64-efi --bootloader-id=grub-uefi --efi-directory=/boot --recheck
+yes | grub-install --target=x86_64-efi --bootloader-id=grub-uefi --efi-directory=/boot --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Set to correct timezone

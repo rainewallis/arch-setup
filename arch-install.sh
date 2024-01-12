@@ -15,7 +15,7 @@ case "$CPU_VENDOR" in
 esac
 
 # Install base system elements
-pacstrap -K $MOUNT_LOCATION base base-devel linux linux-firmware sysfsutils usbutils e2fsprogs inetutils netctl vim less which man-db man-pages $MICROCODE_PACKAGE
+pacstrap -K $MOUNT_LOCATION base base-devel linux linux-firmware sysfsutils usbutils e2fsprogs inetutils netctl vim less which man-db man-pages git $MICROCODE_PACKAGE
 
 genfstab -U $MOUNT_LOCATION >> $MOUNT_LOCATION/etc/fstab
 
@@ -40,5 +40,8 @@ $CHROOT echo "KEYMAP=uk" | $CHROOT tee /etc/vconsole.conf
 
 # Save info for setup script
 $CHROOT echo "CPU_VENDOR=$CPU_VENDOR" | $CHROOT tee /root/.arch-install-vars.tmp
+
+# Clone setup script
+$CHROOT git clone https://github.com/rainewallis/arch-setup.git /root/arch-setup
 
 $CHROOT passwd

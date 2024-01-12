@@ -32,13 +32,13 @@ $CHROOT ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 $CHROOT hwclock -systohc
 
 # Set locale
-$CHROOT echo "en_GB.UTF-8 UTF-8" >> /etc/local.gen
+$CHROOT echo "en_GB.UTF-8 UTF-8" | $CHROOT tee --append /etc/local.gen
 $CHROOT locale-gen
 
-$CHROOT echo "LANG=en_GB.UTF-8" > /etc/locale.conf
-$CHROOT echo "KEYMAP=uk" > /etc/vconsole.conf
+$CHROOT echo "LANG=en_GB.UTF-8" | $CHROOT tee /etc/locale.conf
+$CHROOT echo "KEYMAP=uk" | $CHROOT tee /etc/vconsole.conf
 
 # Save info for setup script
-$CHROOT echo "CPU_VENDOR=$CPU_VENDOR" > /root/.arch-install-vars.tmp
+$CHROOT echo "CPU_VENDOR=$CPU_VENDOR" | $CHROOT tee /root/.arch-install-vars.tmp
 
 $CHROOT passwd

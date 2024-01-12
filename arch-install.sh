@@ -9,8 +9,8 @@ MOUNT_LOCATION="/mnt"
 CPU_VENDOR=$( lscpu | grep Vendor | awk '{print $NF}' )
 MICROCODE_PACKAGE=""
 case "$CPU_VENDOR" in
-    AuthenticAMD*) MICROCODE_PACKAGE="amd_ucode" ;;
-    GenuineIntel*) MICROCODE_PACKAGE="intel_ucode";;
+    AuthenticAMD*) MICROCODE_PACKAGE="amd-ucode" ;;
+    GenuineIntel*) MICROCODE_PACKAGE="intel-ucode";;
     *) echo "Unable to determine CPU vendor..." ;;
 esac
 

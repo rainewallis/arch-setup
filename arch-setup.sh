@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+## FUNCTIONS ##
+
+function yes_or_no {
+    while true; do
+        read -p "$* [y/n]: " yn
+        case $yn in
+            [Yy]*) return 0;;
+            [Nn]*) echo "Aborted" ; return 1 ;;
+        esac
+    done
+}
+
+## SCRIPT ##
+
 # Enable network services
 systemctl enable systemd-networkd
 systemctl enable systemd-resolved
@@ -23,10 +37,11 @@ EOF
 systemctl restart systemd-networkd
 
 pacman -S bind lshw
+yes_or_no "Would you like to install wifi control (iwd)" && pacman -S iwd
 
 #pacman -S networkmanager bind
 #systemctl enable NetworkManager
 #systemctl start NetworkManager
 
 # Get graphics vendor
-GRAPHICS_VENDOR=$( lshw -C display | grep vendor | awk -F: '{print$2}' )
+GRAPHICS_VENDOR=$( lshw -C display | grep vendor | awk -F: '{print $2}' )

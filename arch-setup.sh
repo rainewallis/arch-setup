@@ -22,7 +22,7 @@ EOF
 
 systemctl restart systemd-networkd
 
-pacmna -S bind
+pacman -S bind lshw
 
 #pacman -S networkmanager bind
 #systemctl enable NetworkManager

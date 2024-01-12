@@ -3,6 +3,7 @@
 # Enable network services
 systemctl enable systemd-networkd
 systemctl enable systemd-resolved
+systemctl start systemd-resolved
 
 # Find network interface name
 INTERFACE_NAME=$( ip link | awk -F: '{print $2}' | grep -P 'enp[0-9]+s[0-9]+' | xargs )
@@ -21,8 +22,11 @@ EOF
 
 systemctl restart systemd-networkd
 
-pacman -S networkmanager
-systemctl enable NetworkManager
+pacmna -S bind
+
+#pacman -S networkmanager bind
+#systemctl enable NetworkManager
+#systemctl start NetworkManager
 
 # Get graphics vendor
 GRAPHICS_VENDOR=$( lshw -C display | grep vendor | awk -F: '{print$2}' )

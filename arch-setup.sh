@@ -37,7 +37,7 @@ EOF
 systemctl restart systemd-networkd
 
 pacman -S bind lshw
-yes_or_no "Would you like to install wifi control (iwd)" && pacman -S iwd
+
 
 #pacman -S networkmanager bind
 #systemctl enable NetworkManager

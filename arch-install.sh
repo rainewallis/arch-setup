@@ -3,6 +3,19 @@
 # BEFORE RUNNING THIS SCRIPT:
 # THE DISK MUST BE PARITIONED AND MOUNTED MANUALLY!!
 
+## FUNCTIONS ##
+function yes_or_no {
+    while true; do
+        read -p "$* [y/n]: " yn
+        case $yn in
+            [Yy]*) return 0;;
+            [Nn]*) echo "Aborted" ; return 1 ;;
+        esac
+    done
+}
+
+## SCRIPT ##
+
 MOUNT_LOCATION="/mnt"
 
 # Get CPU Vendor
@@ -14,8 +27,11 @@ case "$CPU_VENDOR" in
     *) echo "Unable to determine CPU vendor..." ;;
 esac
 
+WIFI_DAEMON_PACKAGE=""
+yes_or_no "Would you like to install the wifi daemon (iwd)" && WIFI_DAEMON_PACKAGE="iwd"
+
 # Install base system elements
-pacstrap -K $MOUNT_LOCATION base base-devel linux linux-firmware sysfsutils usbutils e2fsprogs inetutils netctl vim less which man-db man-pages git $MICROCODE_PACKAGE
+pacstrap -K $MOUNT_LOCATION base base-devel linux linux-firmware sysfsutils usbutils e2fsprogs inetutils netctl vim less which man-db man-pages git $MICROCODE_PACKAGE $WIFI_DAEMON_PACKAGE
 
 genfstab -U $MOUNT_LOCATION >> $MOUNT_LOCATION/etc/fstab
 

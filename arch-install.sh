@@ -48,14 +48,14 @@ $CHROOT ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 $CHROOT hwclock -systohc
 
 # Set locale
-$CHROOT echo "en_GB.UTF-8 UTF-8" | $CHROOT tee --append /etc/local.gen
+$CHROOT echo "en_GB.UTF-8 UTF-8" 2>/dev/null | $CHROOT tee --append /etc/local.gen
 $CHROOT locale-gen
 
-$CHROOT echo "LANG=en_GB.UTF-8" | $CHROOT tee /etc/locale.conf
-$CHROOT echo "KEYMAP=uk" | $CHROOT tee /etc/vconsole.conf
+$CHROOT echo "LANG=en_GB.UTF-8" 2>/dev/null | $CHROOT tee /etc/locale.conf
+$CHROOT echo "KEYMAP=uk" 2>/dev/null | $CHROOT tee /etc/vconsole.conf
 
 # Save info for setup script
-$CHROOT echo "CPU_VENDOR=$CPU_VENDOR" | $CHROOT tee /root/.arch-install-vars.tmp
+$CHROOT echo "CPU_VENDOR=$CPU_VENDOR" 2>/dev/null | $CHROOT tee /root/.arch-install-vars.tmp
 
 # Clone setup script
 $CHROOT git clone https://github.com/rainewallis/arch-setup.git /root/arch-setup

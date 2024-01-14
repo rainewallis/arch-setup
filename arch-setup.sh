@@ -36,6 +36,17 @@ EOF
 
 systemctl restart systemd-networkd
 
+# Detect if iwd was installed and if it is drop us into iwctl
+IWD_DETECTED=$( pacman -Q --info iwd 2>/dev/null | grep Install > /dev/null && echo "Installed" )
+# Alternate Detection
+# IWD_DETECTED=$( which iwctl > /dev/null 2>&1 && echo "Installed" )
+if [ "$IWD_DETECTED" = "Installed" ]
+then
+    systemctl enable iwd
+    systemctl start iwd
+    iwctl
+fi
+
 pacman -S bind lshw
 
 

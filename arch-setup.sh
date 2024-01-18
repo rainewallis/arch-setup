@@ -36,6 +36,9 @@ EOF
 
 systemctl restart systemd-networkd
 
+# Link to the stub resolver
+ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
 # Detect if iwd was installed and if it is drop us into iwctl
 IWD_DETECTED=$( pacman -Q --info iwd 2>/dev/null | grep Install > /dev/null && echo "Installed" )
 # Alternate Detection
@@ -57,19 +60,21 @@ pacman -S bind lshw plocate
 
 updatedb
 
-# Install yay to get access to AUR
-git clone https://aur.archlinux.org/yay.git
-
-WD=$( pwd )
-cd yay || return
-makepkg -si
-
-cd "$WD" || return
-
 # Setup user and sudo access
 useradd -m raine
 usermod -a -G wheel raine
 passwd raine
+
+# Install yay to get access to AUR
+WD=$( pwd )
+
+cd /home/raine || return
+git clone https://aur.archlinux.org/yay.git
+
+cd yay || return
+sudo -u raine makepkg -si
+
+cd "$WD" || return
 
 # Get graphics vendor
 GRAPHICS_VENDOR=$( lshw -C display | grep vendor | awk -F: '{print $2}' )
